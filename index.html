@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vedmått-omräknare</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    label {
+      font-weight: bold;
+    }
+    .resultat {
+      background-color: #e0ffe0;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Vedmått-omräknare</h2>
+    <p>Mata in ett av måtten nedan, så räknar vi ut de andra:</p>
+
+    <label for="stjalpt">Stjälpt (m³s):</label>
+    <input type="number" id="stjalpt" step="any" oninput="berakna('stjalpt')">
+
+    <label for="staplat">Staplat (m³t):</label>
+    <input type="number" id="staplat" step="any" oninput="berakna('staplat')">
+
+    <label for="fast">Fast (m³f):</label>
+    <input type="number" id="fast" step="any" oninput="berakna('fast')">
+
+    <div class="resultat" id="resultat"><div class="footer">
+      Verktyget är skapat av Patrik Åkerlöf – <a href="mailto:patrik.akerlof@gmail.com">patrik.akerlof@gmail.com</a>
+    </div>
+  </div>
+
+  <script>
+    let aktivtFalt = null;
+
+    function berakna(kalla) {
+      aktivtFalt = kalla;
+
+      const stjalptInput = document.getElementById('stjalpt');
+      const staplatInput = document.getElementById('staplat');
+      const fastInput = document.getElementById('fast');
+      const resultat = document.getElementById('resultat');
+
+      let stjalpt = parseFloat(stjalptInput.value);
+      let staplat = parseFloat(staplatInput.value);
+      let fast = parseFloat(fastInput.value);
+
+      if (kalla === 'stjalpt' && !isNaN(stjalpt)) {
+        staplat = stjalpt / 1.4;
+        fast = staplat * 0.7;
+      } else if (kalla === 'staplat' && !isNaN(staplat)) {
+        stjalpt = staplat * 1.4;
+        fast = staplat * 0.7;
+      } else if (kalla === 'fast' && !isNaN(fast)) {
+        staplat = fast / 0.7;
+        stjalpt = staplat * 1.4;
+      } else {
+        return; // inget giltigt värde
+      }
+
+      if (!isNaN(stjalpt) && !isNaN(staplat) && !isNaN(fast)) {
+        if (kalla !== 'stjalpt') stjalptInput.value = stjalpt.toFixed(2);
+        if (kalla !== 'staplat') staplatInput.value = staplat.toFixed(2);
+        if (kalla !== 'fast') fastInput.value = fast.toFixed(2);
+
+        resultat.innerHTML = `
+          <strong>Omräknat:</strong><br>
+          Stjälpt: ${stjalpt.toFixed(2)} m³s<br>
+          Staplat: ${staplat.toFixed(2)} m³t<br>
+          Fast: ${fast.toFixed(2)} m³f
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
