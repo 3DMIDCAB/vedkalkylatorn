@@ -1,36 +1,59 @@
-# Vedomräknare – Version 1
+# Vedomräknare – Version 2
 
-Det här är en enkel webbaserad räknare för att omvandla mellan olika volymer av ved:
+Det här är version 2 av ett enkelt och smart verktyg för att räkna om vedvolymer. Denna version inkluderar nu **vedlängd som inmatning**, vilket ger mer noggranna beräkningar av fast volym.
 
-- **Stjälpt mått (m³s)** – ved hälld löst i en container eller släpvagn
-- **Staplat mått (m³t)** – ved som är prydligt staplad
-- **Fast mått (m³f)** – rent trä utan luft mellan bitarna
+## 🪵 Funktioner
 
-## Funktioner
+- Omvandling mellan:
+  - **Stjälpt mått (m³s)** – löst hälld ved
+  - **Staplat mått (m³t)** – staplad ved
+  - **Fast mått (m³f)** – endast trävolym
+- Användaren kan mata in **valfri vedlängd (i cm)** mellan 20–60 cm
+- Omräkningsfaktorer anpassas automatiskt beroende på vedlängden
+- Enkel att använda direkt i webbläsaren
 
-🪵 Användaren matar in **ett av de tre måtten**, så räknar verktyget automatiskt ut de två andra enligt standardfaktorer:
+## 🔧 Omräkningslogik
 
-- 1 staplad m³ = 1,4 stjälpt m³
-- 1 staplad m³ = 0,7 fast m³
+Omräkning mellan måtten bygger på standardfaktorer:
+- 1 staplad m³ ≈ 1,4 stjälpta m³
+- Fast volym beräknas utifrån vedlängd enligt följande interpolering:
 
-## Användning
+| Vedlängd | Faktor staplat → fast |
+|----------|------------------------|
+| 25 cm    | 0.72                   |
+| 30 cm    | 0.70                   |
+| 40 cm    | 0.68                   |
+| 50 cm    | 0.66                   |
 
-1. Öppna `vedomraknare.html` i valfri webbläsare.
-2. Skriv in ett värde i valfritt fält (stjälpt, staplat eller fast).
-3. Resultatet visas direkt nedanför.
+## ✅ Användning
 
-## Exempel
+1. Öppna `vedomraknare-v2.html` i en webbläsare.
+2. Fyll i:
+   - Ett av måtten (stjälpt, staplat eller fast)
+   - Valfri vedlängd (t.ex. 30 cm)
+3. Verktyget räknar ut de andra två måtten automatiskt.
 
-Om du matar in `40` i fältet för **stjälpt mått**, får du:
+## 📌 Exempel
 
-- Staplat: `28.57` m³t  
-- Fast: `20.00` m³f
+Om du matar in:
 
-## Skapare
+- Vedlängd: `30 cm`
+- Stjälpt: `40 m³s`
 
-🔧 Verktyget är skapat av **Patrik Åkerlöf** – Vallstena, Gotland  
+Då får du:
+
+- Staplat: `28.57 m³t`
+- Fast: `20.00 m³f`
+
+## 📤 Publicering
+
+Versionen är anpassad för publicering via t.ex. [Netlify Drop](https://app.netlify.com/drop) eller GitHub Pages.
+
+## 👤 Skapare
+
+Verktyget är skapat av **Patrik Åkerlöf**, Vallstena på Gotland  
 📧 Kontakt: `patrik.akerlof@gmail.com`
 
-## Licens
+## 📜 Licens
 
-Du får använda och dela detta fritt, men inte sälja det vidare utan tillstånd.
+Fritt att använda och dela för privat bruk. Vid kommersiell användning – kontakta upphovsmannen.
